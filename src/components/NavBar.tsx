@@ -6,11 +6,13 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 const NavBar = () => {
+  const navigate = useNavigate()
   return (
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static" sx={{ backgroundColor: '#6f88b0' }}>
+          <AppBar position="static" sx={{ backgroundColor: '#6f88b0', height: '6vh' }}>
             <Toolbar>
               <IconButton
                 size="large"
@@ -22,9 +24,12 @@ const NavBar = () => {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                News
+                AnilistApp
               </Typography>
-              <Button color="inherit">Login</Button>
+              <Button onClick={() => navigate('/sign-in')} color="inherit">Login</Button>
+              <Button onClick={() => navigate('/sign-up')} color="inherit">sign-up</Button>
+              <Button><NavLink to='/' color="inherit">Home</NavLink></Button>
+              <Button><NavLink to='/profile' color="inherit">Profile</NavLink></Button>
             </Toolbar>
           </AppBar>
         </Box>
