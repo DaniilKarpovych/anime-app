@@ -8,13 +8,13 @@ import { useMediaQuery } from '@mui/material'
 
 const MainPage:FC = () => {
   const { loading, error, data } = apiHQ()
-  const matches = useMediaQuery('(min-width:1100px)')
+  const matches = useMediaQuery('(min-width:1000px)')
   const animeList = data?.Page?.media
   console.log('DATA', data)
   return (
-<Container maxWidth={false} sx={{ display: 'flex' }} >
-      {matches && <Filter />}
-    <Box sx={{ overflowY: 'scroll', width: 'fit-content', m: 1, height: '800px' }}>
+<Container maxWidth={false} sx={{ display: `${matches ? 'flex' : 'block'}` }} >
+     <Filter />
+    <Box sx={{ overflowY: 'scroll', width: 'fit-content', m: 1, height: `${matches ? '800px' : '400px'}` }}>
       {!loading && !error && animeList.length > 0 && animeList.map((item:any, index:any) => {
         return <AnimeCard key={index} anime={item} />
       })}

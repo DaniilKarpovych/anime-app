@@ -11,6 +11,7 @@ import { SignUpPage } from './pages/SignUpPage'
 import PrivateRoute from './components/PrivateRoute'
 import Profile from './pages/Profile'
 import { Box } from '@mui/material'
+import { auth } from './firebaseConfig'
 
 export const App = () => {
   return (
@@ -18,12 +19,12 @@ export const App = () => {
   <Router>
   <NavBar />
   <Routes>
-    <Route path='/' element={<MainPage />} />
-    <Route path='/sign-in' element={<SignInPage />} />
-    <Route path='/sign-up' element={<SignUpPage />} />
+    {!auth.currentUser && <Route path='/sign-in' element={<SignInPage />} />}
+    {!auth.currentUser && <Route path='/sign-up' element={<SignUpPage />} />}
     <Route path='/profile' element = {<PrivateRoute />}>
       <Route path='/profile' element={<Profile />} />
     </Route>
+    <Route path='/*' element={<MainPage />} />
   </Routes>
   </Router>
   </Box>
