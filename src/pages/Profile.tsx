@@ -1,8 +1,11 @@
+import { Box, Typography } from '@mui/material'
 import React from 'react'
 
 const Profile = () => {
   return (
-    <div>Profile</div>
+    <Box>
+      <Typography variant='h1' align='center'>Profile</Typography>
+      </Box>
   )
 }
 

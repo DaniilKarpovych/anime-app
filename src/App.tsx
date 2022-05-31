@@ -7,13 +7,14 @@ import {
 import NavBar from './components/NavBar'
 import MainPage from './pages/MainPage'
 import SignInPage from './pages/SignInPage'
-import SignUpPage from './pages/SignUpPage'
+import { SignUpPage } from './pages/SignUpPage'
 import PrivateRoute from './components/PrivateRoute'
 import Profile from './pages/Profile'
+import { Box } from '@mui/material'
 
 export const App = () => {
   return (
-  <main>
+  <Box sx={{ height: '100vh', backgroundColor: '#d6e3f8' }}>
   <Router>
   <NavBar />
   <Routes>
@@ -25,6 +26,6 @@ export const App = () => {
     </Route>
   </Routes>
   </Router>
-  </main>
+  </Box>
   )
 }

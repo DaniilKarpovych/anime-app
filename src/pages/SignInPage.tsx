@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
@@ -10,7 +10,9 @@ import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { useNavigate } from 'react-router-dom'
+import { auth } from '../firebaseConfig'
 
 function Copyright (props: any) {
   return (
@@ -25,22 +27,21 @@ function Copyright (props: any) {
   )
 }
 
-const theme = createTheme()
-
 export default function SignIn () {
+  const navigate = useNavigate()
+  const [credential, setCredentials] = useState({ email: '', password: '' })
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get('email'),
-      password: data.get('password')
-    })
+    try {
+      signInWithEmailAndPassword(auth, credential.email, credential.password)
+      navigate('/')
+    } catch (e) {
+      console.warn('SignIn', e)
+    }
   }
 
   return (
-    <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
-
         <Box
           sx={{
             marginTop: 8,
@@ -57,6 +58,8 @@ export default function SignIn () {
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
+              onChange={(e:any) => setCredentials((state:any) => ({ ...state, email: e.target.value }))}
+              value={credential.email}
               margin="normal"
               required
               fullWidth
@@ -67,6 +70,8 @@ export default function SignIn () {
               autoFocus
             />
             <TextField
+              onChange={(e:any) => setCredentials((state:any) => ({ ...state, password: e.target.value }))}
+              value={credential.password}
               margin="normal"
               required
               fullWidth
@@ -104,6 +109,5 @@ export default function SignIn () {
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
-    </ThemeProvider>
   )
 }

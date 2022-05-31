@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography'
 import { CardActionArea } from '@mui/material'
 
 const AnimeCard:FC<{anime:any}> = ({ anime }) => {
-  console.log('anime', anime)
   const img = anime.coverImage.large
   const title = anime.title.romaji
   const color = anime.coverImage.color

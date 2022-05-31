@@ -7,12 +7,21 @@ import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { signOut } from 'firebase/auth'
+import { auth } from '../firebaseConfig'
 
 const NavBar = () => {
   const navigate = useNavigate()
+  const onClickLogout = () => {
+    try {
+      signOut(auth)
+    } catch (e) {
+      console.warn('signout', e)
+    }
+  }
   return (
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static" sx={{ backgroundColor: '#6f88b0', height: '6vh' }}>
+          <AppBar position="static" sx={{ backgroundColor: '#6f88b0' }}>
             <Toolbar>
               <IconButton
                 size="large"
@@ -30,6 +39,7 @@ const NavBar = () => {
               <Button onClick={() => navigate('/sign-up')} color="inherit">sign-up</Button>
               <Button><NavLink to='/' color="inherit">Home</NavLink></Button>
               <Button><NavLink to='/profile' color="inherit">Profile</NavLink></Button>
+              <Button color='primary' onClick={onClickLogout}>LOCKOUT</Button>
             </Toolbar>
           </AppBar>
         </Box>

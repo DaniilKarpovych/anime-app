@@ -1,7 +1,7 @@
-import * as React from 'react'
+import React, { useState } from 'react'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
-import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
@@ -11,7 +11,9 @@ import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { useNavigate } from 'react-router-dom'
+import { auth } from '../firebaseConfig'
+// import { auth } from '../firebaseConfig'
 
 function Copyright (props: any) {
   return (
@@ -26,22 +28,28 @@ function Copyright (props: any) {
   )
 }
 
-const theme = createTheme()
-
-export default function SignUp () {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+export const SignUpPage = () => {
+  const navigate = useNavigate()
+  const [credential, setCredentials] = useState({ email: '', password: '' })
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get('email'),
-      password: data.get('password')
-    })
+
+    try {
+      const { email, password } = credential
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+
+      console.log('Credential', userCredential.user)
+      navigate('/')
+    } catch (error) {
+      console.warn(error)
+      // const errorCode = error.code
+      // const errorMessage = error.message
+      // ..
+    }
   }
 
   return (
-    <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <Box
           sx={{
             marginTop: 8,
@@ -81,6 +89,8 @@ export default function SignUp () {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  onChange={(e:any) => setCredentials((state:any) => ({ ...state, email: e.target.value }))}
+                  value={credential.email}
                   required
                   fullWidth
                   id="email"
@@ -91,6 +101,8 @@ export default function SignUp () {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  onChange={(e:any) => setCredentials((state:any) => ({ ...state, password: e.target.value }))}
+                  value={credential.password}
                   required
                   fullWidth
                   name="password"
@@ -126,6 +138,5 @@ export default function SignUp () {
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
-    </ThemeProvider>
   )
 }
