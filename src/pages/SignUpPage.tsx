@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
@@ -30,13 +30,22 @@ function Copyright (props: any) {
 
 export const SignUpPage = () => {
   const navigate = useNavigate()
-  const [credential, setCredentials] = useState({ email: '', password: '' })
+  const [credential, setCredentials] = useState({ email: '', password: '', firstName: '', lastName: '' })
+  const onChangeHandler = (e:React.ChangeEvent<HTMLInputElement>) => {
+    setCredentials((state) => {
+      return { ...state, [e.target.name]: e.target.value }
+    })
+  }
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     try {
-      const { email, password } = credential
+      const { email, password, firstName, lastName } = credential
       const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+      updateProfile(userCredential.user, {
+        displayName: `${firstName + lastName}`
+      })
 
       console.log('Credential', userCredential.user)
       navigate('/')
@@ -68,6 +77,8 @@ export const SignUpPage = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  onChange={onChangeHandler}
+                  value={credential.firstName}
                   autoComplete="given-name"
                   name="firstName"
                   required
@@ -79,6 +90,8 @@ export const SignUpPage = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  onChange={onChangeHandler}
+                  value={credential.lastName}
                   required
                   fullWidth
                   id="lastName"
@@ -89,7 +102,7 @@ export const SignUpPage = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  onChange={(e:any) => setCredentials((state:any) => ({ ...state, email: e.target.value }))}
+                  onChange={onChangeHandler}
                   value={credential.email}
                   required
                   fullWidth

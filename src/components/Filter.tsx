@@ -1,14 +1,15 @@
-import { Box, TextField } from '@mui/material'
+import { Grid, TextField } from '@mui/material'
 import React from 'react'
 
 const Filter = () => {
   return (
-    <Box component='div' sx={{ backgroundColor: '#819ecc', maxWidth: '350px', m: 1, p: 1, borderRadius: '30px', height: 'fit-content' }}>
-        <TextField fullWidth margin="normal" label="Search"/>
-        <TextField fullWidth margin="normal"/>
-        <TextField fullWidth margin="normal"/>
-        <TextField fullWidth margin="normal"/>
-    </Box>
+    <Grid container sx={{ backgroundColor: '#819ecc', m: 1, p: 1, borderRadius: '30px', height: 'fit-content' }}>
+        <Grid item sm={12} md={6} xl={3}> <TextField margin="normal" size='small' /></Grid>
+        <Grid item sm={12} md={6} xl={3}> <TextField margin="normal" size='small' /></Grid>
+        <Grid item sm={12} md={6} xl={3}> <TextField margin="normal" size='small' /></Grid>
+        <Grid item sm={12} md={6} xl={3}> <TextField margin="normal" size='small' /></Grid>
+
+    </Grid>
   )
 }
 

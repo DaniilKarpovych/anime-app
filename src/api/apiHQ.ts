@@ -25,8 +25,11 @@ Page (page: $page, perPage: 20) {
 }
 `
 
-export default function apiHQ () {
-  const { loading, error, data } = useQuery(EXCHANGE_RATES)
-  console.log(data)
+export default function apiHQ (filter:string) {
+  const { loading, error, data } = useQuery(EXCHANGE_RATES, {
+    variables: {
+      search: filter || undefined
+    }
+  })
   return { loading, error, data }
 }
