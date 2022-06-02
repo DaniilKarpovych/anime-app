@@ -9,7 +9,7 @@ import CustomMenu from './CustomMenu'
 import SearchIcon from '@mui/icons-material/Search'
 import CloseIcon from '@mui/icons-material/Close'
 import { useNavigate } from 'react-router-dom'
-import { TextField } from '@mui/material'
+import { TextField, useMediaQuery } from '@mui/material'
 
 interface Props {
   filter:string
@@ -18,6 +18,8 @@ interface Props {
 
 const NavBar:FC<Props> = ({ filter, setFilter }) => {
   const navigate = useNavigate()
+  const matches = useMediaQuery('(min-width:480px)')
+
   const [showSearch, setShowSearch] = useState(false)
   const onChangeHandler = (e:React.ChangeEvent<HTMLInputElement>) => {
     setFilter(e.target.value)
@@ -36,14 +38,15 @@ const NavBar:FC<Props> = ({ filter, setFilter }) => {
               >
                 <HomeIcon />
               </IconButton>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              {(!showSearch || matches) && <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 AnilistApp
-              </Typography>
+              </Typography>}
               {showSearch && <TextField
-               onChange={onChangeHandler}
-               label='Search'
-               size="small"
-               variant="filled"
+                autoFocus={true}
+                onChange={onChangeHandler}
+                variant='standard'
+                size="medium"
+                sx={{ backgroundColor: 'white', borderRadius: '15px', pl: '10px', pr: '10px' }}
                />}
               {!showSearch && <SearchIcon onClick={() => setShowSearch(true)}/>}
               {showSearch && <CloseIcon onClick={() => {

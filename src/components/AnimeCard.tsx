@@ -1,24 +1,30 @@
 import React, { FC } from 'react'
 import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+// import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
-import Typography from '@mui/material/Typography'
-import { CardActionArea } from '@mui/material'
+// import Typography from '@mui/material/Typography'
+import { CardActionArea, CardHeader, Grid } from '@mui/material'
 
 const AnimeCard:FC<{anime:any}> = ({ anime }) => {
   const img = anime.coverImage.large
   const title = anime.title.romaji
   const color = anime.coverImage.color
-  const descriptions = anime.description
+  // const descriptions = anime.description
 
   return (
-    <Card sx={{ display: 'flex', backgroundColor: '#cacfda', margin: '5px', boxShadow: `4px 4px 4px 4px ${color}` }}>
-    <CardActionArea sx={{ display: 'flex', justifyContent: 'flex-start' }} >
+    <Grid item >
+    <Card sx={{ height: '350px', backgroundColor: `${color}`, margin: '5px', boxShadow: `4px 4px 4px 4px ${color},` }}>
+    <CardActionArea >
+      <CardHeader
+      sx={{ width: '140px' }}
+      title={title}
+      />
+
       <CardMedia
       sx={{
-        width: '150px',
-        objectFit: 'cover',
-        backgroundPosition: 'left'
+        margin: 'auto',
+        width: '140px',
+        objectFit: 'contained'
 
       }}
         component="img"
@@ -26,16 +32,17 @@ const AnimeCard:FC<{anime:any}> = ({ anime }) => {
         src={img}
         alt="img"
       />
-      <CardContent>
+      {/* <CardContent>
         <Typography gutterBottom color='black' variant="h5" component="div">
           {title}
-        </Typography>
-        <Typography variant="body2" color="black">
+        </Typography> */}
+        {/* <Typography variant="body2" color="black">
           {descriptions.length > 400 ? `${descriptions.slice(0, 400)}...` : descriptions}
-        </Typography>
-      </CardContent>
+        </Typography> */}
+      {/* </CardContent> */}
     </CardActionArea>
   </Card>
+  </Grid>
   )
 }
 
