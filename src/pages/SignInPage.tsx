@@ -14,20 +14,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
 import { auth } from '../firebaseConfig'
 
-function Copyright (props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
-
-export default function SignIn () {
+export const SignInPage = () => {
   const navigate = useNavigate()
   const [credential, setCredentials] = useState({ email: '', password: '' })
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -107,7 +94,6 @@ export default function SignIn () {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
   )
 }

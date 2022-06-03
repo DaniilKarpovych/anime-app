@@ -3,7 +3,7 @@ import Card from '@mui/material/Card'
 // import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 // import Typography from '@mui/material/Typography'
-import { CardActionArea, CardHeader, Grid } from '@mui/material'
+import { CardActionArea, CardHeader } from '@mui/material'
 
 const AnimeCard:FC<{anime:any}> = ({ anime }) => {
   const img = anime.coverImage.large
@@ -12,18 +12,18 @@ const AnimeCard:FC<{anime:any}> = ({ anime }) => {
   // const descriptions = anime.description
 
   return (
-    <Grid item >
-    <Card sx={{ height: '350px', backgroundColor: `${color}`, margin: '5px', boxShadow: `4px 4px 4px 4px ${color},` }}>
+
+    <Card sx={{ height: 'auto', backgroundColor: `${color}`, margin: '5px' }}>
     <CardActionArea >
       <CardHeader
-      sx={{ width: '140px' }}
+      sx={{ width: 'auto', textAlign: 'center' }}
       title={title}
       />
 
       <CardMedia
       sx={{
         margin: 'auto',
-        width: '140px',
+        width: '135px',
         objectFit: 'contained'
 
       }}
@@ -42,7 +42,7 @@ const AnimeCard:FC<{anime:any}> = ({ anime }) => {
       {/* </CardContent> */}
     </CardActionArea>
   </Card>
-  </Grid>
+
   )
 }
 

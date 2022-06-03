@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom'
 import NavBar from './components/NavBar'
 import MainPage from './pages/MainPage'
-import SignInPage from './pages/SignInPage'
+import { SignInPage } from './pages/SignInPage'
 import { SignUpPage } from './pages/SignUpPage'
 import PrivateRoute from './components/PrivateRoute'
 import Profile from './pages/Profile'
@@ -16,7 +16,7 @@ import { auth } from './firebaseConfig'
 export const App = () => {
   const [filter, setFilter] = useState<string>('')
   return (
-  <Box sx={{ height: '100vh', backgroundColor: '#d6e3f8' }}>
+  <Box >
   <Router>
   <NavBar filter={filter} setFilter={setFilter} />
   <Routes>

@@ -10,7 +10,7 @@ Page (page: $page, perPage: 20) {
     hasNextPage
     perPage
   }
-  media (id: $id, search: $search) {
+  media (id: $id, search: $search, isAdult:false, genre_not_in:"Hentai") {
     id
     title {
       romaji

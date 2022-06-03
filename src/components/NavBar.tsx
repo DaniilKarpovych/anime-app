@@ -26,7 +26,7 @@ const NavBar:FC<Props> = ({ filter, setFilter }) => {
   }
   return (
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static" sx={{ backgroundColor: '#85a3d3' }}>
+          <AppBar position="fixed" sx={{ backgroundColor: '#85a3d3' }}>
             <Toolbar>
               <IconButton
                 onClick={() => navigate('/')}
@@ -46,7 +46,7 @@ const NavBar:FC<Props> = ({ filter, setFilter }) => {
                 onChange={onChangeHandler}
                 variant='standard'
                 size="medium"
-                sx={{ backgroundColor: 'white', borderRadius: '15px', pl: '10px', pr: '10px' }}
+                sx={{ backgroundColor: 'white', borderRadius: '15px', pl: '10px', pr: '10px', flexGrow: `${matches ? 0 : 1}` }}
                />}
               {!showSearch && <SearchIcon onClick={() => setShowSearch(true)}/>}
               {showSearch && <CloseIcon onClick={() => {

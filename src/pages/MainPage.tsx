@@ -1,36 +1,41 @@
 import React, { FC, useState } from 'react'
 import Container from '@mui/material/Container'
-// import Box from '@mui/material/Box'
+import Masonry from '@mui/lab/Masonry'
 import AnimeCard from '../components/AnimeCard'
 import apiHQ from '../api/apiHQ'
 import Filter from '../components/Filter'
-import { Button, Grid, useMediaQuery } from '@mui/material'
+import { Button } from '@mui/material'
 
 const MainPage:FC<{filter:string}> = ({ filter }) => {
   const [visible, setVisible] = useState(false)
   const { data } = apiHQ(filter)
-  const matches = useMediaQuery('(min-width:1000px)')
-  const animeList = data?.Page?.media ?? false
+  const onScrollsHandler = (e:any) => {
+    if (e.currentTarget.clientHeight + e.currentTarget.scrollTop >= e.currentTarget.scrollHeight - 50) {
+      // set next page
+    }
+  }
+  const animeList = data?.Page?.media ?? []
   return (
-<Container maxWidth='xl' >
-    {!visible && <Button fullWidth variant="outlined" sx={{ mt: '10px' }} onClick={() => setVisible((state) => !state)}>Filter</Button>}
-    {visible && <Filter setVisible={setVisible}/>}
-    <Grid
-    container
-    columns={12}
+<Container onScroll={onScrollsHandler } maxWidth='xl' sx={{ maxHeight: '800px', mt: '72px', position: 'relative', overflowY: 'scroll' }} >
+    {!visible && <Button
+    variant="contained"
     sx={{
-      backgroundColor: 'lightblue',
-      border: '1px solid grey',
-      overflowY: 'scroll',
-      maxWidth: '1300px',
-      margin: 'auto',
-      height: `${(visible && !matches) ? '550px' : '750px'}`,
-      mt: 1
-    }}>
+      position: 'fixed',
+      zIndex: '100',
+      borderRadius: '100px',
+      pt: '20px',
+      pb: '20px',
+      right: '10px',
+      bottom: '10px'
+    }}
+      onClick={() => setVisible((state) => !state)}>Filter</Button>}
+    {visible && <Filter setVisible={setVisible}/>}
+
+    <Masonry columns={{ xs: 2, sm: 3, md: 4, lg: 5 }} spacing={1}>
       {animeList && animeList.map((item:any, index:any) => {
         return <AnimeCard key={index} anime={item} />
       })}
-    </Grid>
+      </Masonry>
 </Container>
   )
 }
