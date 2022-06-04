@@ -1,12 +1,14 @@
 import React, { FC } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { Button, Grid, TextField } from '@mui/material'
+import { SelectTag } from './FilterInpust/SelectTag'
 
 interface Props {
   setVisible:React.Dispatch<boolean>
+  animeGenre:[string]
 }
 
-const Filter:FC<Props> = ({ setVisible }) => {
+const Filter:FC<Props> = ({ setVisible, animeGenre }) => {
   return (
     <Grid
     position='relative'
@@ -28,7 +30,7 @@ const Filter:FC<Props> = ({ setVisible }) => {
         <Grid item > <TextField size='small' /></Grid>
         <Grid item > <TextField size='small' /></Grid>
         <Grid item > <TextField size='small' /></Grid>
-        <Grid item > <TextField size='small' /></Grid>
+        <Grid item > <SelectTag animeGenre={animeGenre} /></Grid>
         <Button sx={{ position: 'absolute', right: '-35px', top: '-15px' }} onClick={() => setVisible(false)}><CloseIcon/></Button>
     </Grid>
   )

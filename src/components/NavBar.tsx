@@ -12,18 +12,18 @@ import { useNavigate } from 'react-router-dom'
 import { TextField, useMediaQuery } from '@mui/material'
 
 interface Props {
-  filter:string
-  setFilter:React.Dispatch<string>
+  search:string
+  setSearch:React.Dispatch<string>
   setPage:React.Dispatch<number>
 }
 
-const NavBar:FC<Props> = ({ filter, setFilter, setPage }) => {
+const NavBar:FC<Props> = ({ search, setSearch, setPage }) => {
   const navigate = useNavigate()
   const matches = useMediaQuery('(min-width:480px)')
 
   const [showSearch, setShowSearch] = useState(false)
   const onChangeHandler = (e:React.ChangeEvent<HTMLInputElement>) => {
-    setFilter(e.target.value)
+    setSearch(e.target.value)
     setPage(1)
   }
   return (
@@ -44,7 +44,7 @@ const NavBar:FC<Props> = ({ filter, setFilter, setPage }) => {
                 AnilistApp
               </Typography>}
               {showSearch && <TextField
-                value={filter}
+                value={search}
                 autoFocus={true}
                 onChange={onChangeHandler}
                 variant='standard'
@@ -54,7 +54,7 @@ const NavBar:FC<Props> = ({ filter, setFilter, setPage }) => {
               {!showSearch && <SearchIcon onClick={() => setShowSearch(true)}/>}
               {showSearch && <CloseIcon onClick={() => {
                 setShowSearch(false)
-                setFilter('')
+                setSearch('')
               }
                 }/>}
              <CustomMenu />

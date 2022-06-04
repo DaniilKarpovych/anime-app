@@ -18,11 +18,10 @@ const CustomMenu = () => {
     setAnchorEl(null)
   }
   const onClickLogout = () => {
-    console.log('LOGOUT')
     try {
       signOut(auth)
     } catch (e) {
-      console.warn('signout', e)
+      console.warn('sign-out', e)
     }
   }
   return (

@@ -7,7 +7,7 @@ const Profile = () => {
     <Box>
       <Typography variant='h1' align='center'>Profile</Typography>
       <Typography variant='h3' align='center'>{auth.currentUser?.displayName}</Typography>
-      </Box>
+    </Box>
   )
 }
 
