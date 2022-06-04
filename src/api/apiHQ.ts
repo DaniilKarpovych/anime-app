@@ -25,10 +25,11 @@ Page (page: $page, perPage: 20) {
 }
 `
 
-export default function apiHQ (filter:string) {
+export default function apiHQ (filter:string, page:number) {
   const { loading, error, data } = useQuery(EXCHANGE_RATES, {
     variables: {
-      search: filter || undefined
+      search: filter || undefined,
+      page: page
     }
   })
   return { loading, error, data }

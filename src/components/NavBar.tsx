@@ -14,15 +14,17 @@ import { TextField, useMediaQuery } from '@mui/material'
 interface Props {
   filter:string
   setFilter:React.Dispatch<string>
+  setPage:React.Dispatch<number>
 }
 
-const NavBar:FC<Props> = ({ filter, setFilter }) => {
+const NavBar:FC<Props> = ({ filter, setFilter, setPage }) => {
   const navigate = useNavigate()
   const matches = useMediaQuery('(min-width:480px)')
 
   const [showSearch, setShowSearch] = useState(false)
   const onChangeHandler = (e:React.ChangeEvent<HTMLInputElement>) => {
     setFilter(e.target.value)
+    setPage(1)
   }
   return (
         <Box sx={{ flexGrow: 1 }}>
@@ -42,6 +44,7 @@ const NavBar:FC<Props> = ({ filter, setFilter }) => {
                 AnilistApp
               </Typography>}
               {showSearch && <TextField
+                value={filter}
                 autoFocus={true}
                 onChange={onChangeHandler}
                 variant='standard'
