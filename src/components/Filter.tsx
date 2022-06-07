@@ -1,7 +1,10 @@
 import React, { FC } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
-import { Button, Grid, TextField } from '@mui/material'
-import { SelectTag } from './FilterInpust/SelectTag'
+import { Button, Grid, Typography } from '@mui/material'
+import { SelectTag } from './FilterInput/SelectTag'
+import CheckIcon from '@mui/icons-material/Check'
+import TypeSelect from './FilterInput/TypeSelect'
+import { DataPicker } from './FilterInput/DataPicker'
 
 interface Props {
   setVisible:React.Dispatch<boolean>
@@ -18,20 +21,28 @@ const Filter:FC<Props> = ({ setVisible, animeGenre }) => {
     sx={{
       alignContent: 'center',
       justifyContent: 'center',
-      backgroundColor: '#819ecc',
-      m: 1,
-      p: 1,
-      borderRadius: '30px',
+      backgroundColor: '#ffffff',
+      m: 2,
+      p: '4px 25px',
       height: 'fit-content',
-      maxWidth: '1200px',
-      marginLeft: 'auto',
-      marginRight: 'auto'
+      maxWidth: '1100px'
     }}>
-        <Grid item > <TextField size='small' /></Grid>
-        <Grid item > <TextField size='small' /></Grid>
-        <Grid item > <TextField size='small' /></Grid>
+        <Grid sx={{ backgroundColor: '#102122b6', mr: '40px', ml: '40px' }} item xs={12} >
+          <Typography sx={{ }} variant='h6' align='center'>FILTER</Typography>
+          </Grid>
+        <Grid item > <DataPicker/></Grid>
+        <Grid item > <TypeSelect /></Grid>
         <Grid item > <SelectTag animeGenre={animeGenre} /></Grid>
-        <Button sx={{ position: 'absolute', right: '-35px', top: '-15px' }} onClick={() => setVisible(false)}><CloseIcon/></Button>
+        <Button
+        sx={{ position: 'absolute', right: '-15px', top: '-5px' }}
+        onClick={() => setVisible(false)}>
+          <CloseIcon fontSize='large'/>
+          </Button>
+          <Button
+        sx={{ position: 'absolute', right: '-15px', bottom: '-5px' }}
+        onClick={() => setVisible(false)}>
+          <CheckIcon fontSize='large'/>
+          </Button>
     </Grid>
   )
 }

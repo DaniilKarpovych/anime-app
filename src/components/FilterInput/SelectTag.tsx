@@ -8,8 +8,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Checkbox from '@mui/material/Checkbox'
 import { Box } from '@mui/material'
 
-const ITEM_HEIGHT = 48
-const ITEM_PADDING_TOP = 8
+const ITEM_HEIGHT = 40
+const ITEM_PADDING_TOP = 4
 const MenuProps = {
   PaperProps: {
     style: {
@@ -38,7 +38,7 @@ export const SelectTag:FC<Props> = ({ animeGenre }) => {
 
   return (
     <Box component='div'>
-      <FormControl sx={{ m: 1, width: '200px' }}>
+      <FormControl sx={{ width: '200px' }}>
         <InputLabel id="demo-multiple-checkbox-label">Genre</InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
@@ -50,7 +50,7 @@ export const SelectTag:FC<Props> = ({ animeGenre }) => {
           renderValue={(selected) => selected.join(', ')}
           MenuProps={MenuProps}
         >
-          {animeGenre.map((name) => (
+          {animeGenre && animeGenre.map((name) => (
             <MenuItem key={name} value={name}>
               <Checkbox checked={selGenres.indexOf(name) > -1} />
               <ListItemText primary={name} />
