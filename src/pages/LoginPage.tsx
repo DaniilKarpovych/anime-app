@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
@@ -14,7 +12,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
 import { auth } from '../firebaseConfig'
 
-export const SignInPage = () => {
+export const LoginPage = () => {
   const navigate = useNavigate()
   const [credential, setCredentials] = useState({ email: '', password: '' })
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -31,7 +29,7 @@ export const SignInPage = () => {
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 12,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center'
@@ -68,10 +66,6 @@ export const SignInPage = () => {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
@@ -81,13 +75,8 @@ export const SignInPage = () => {
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
-                <Link href="/sigh-up" variant="body2">
+                <Link href="/sign-up" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

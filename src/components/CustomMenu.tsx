@@ -20,6 +20,7 @@ const CustomMenu = () => {
   const onClickLogout = () => {
     try {
       signOut(auth)
+      navigate('/')
     } catch (e) {
       console.warn('sign-out', e)
     }
@@ -84,7 +85,7 @@ const CustomMenu = () => {
          {!user && <MenuItem onClick={() => navigate('/sign-up')}>
             <LoginIcon sx={{ marginLeft: '-5px', marginRight: '10px' }} />  Sign-up
         </MenuItem>}
-        {!user && <MenuItem onClick={() => navigate('/sign-in')}>
+        {!user && <MenuItem onClick={() => navigate('/login')}>
             <LoginIcon sx={{ marginLeft: '-5px', marginRight: '10px' }}/> Login
         </MenuItem>}
        {user && <MenuItem onClick={onClickLogout}>
