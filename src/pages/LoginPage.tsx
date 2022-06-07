@@ -2,14 +2,13 @@ import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { auth } from '../firebaseConfig'
 
 export const LoginPage = () => {
@@ -76,7 +75,7 @@ export const LoginPage = () => {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="/sign-up" variant="body2">
+                <Link to="/sign-up" >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
