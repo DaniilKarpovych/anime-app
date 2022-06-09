@@ -2,10 +2,11 @@ import React, { FC, useState, useEffect } from 'react'
 import Container from '@mui/material/Container'
 import Masonry from '@mui/lab/Masonry'
 import AnimeCard from '../components/AnimeCard'
-import apiHQ from '../api/apiHQ'
+import { apiHQ, FilterScheme } from '../api/apiHQ'
 import Filter from '../components/Filter'
-import { Backdrop, Button } from '@mui/material'
-// import { DataArrayTwoTone } from '@mui/icons-material'
+import { Backdrop, Box, Button, CircularProgress, Typography } from '@mui/material'
+import { Media } from '../model/animeModel'
+import { toast } from 'react-toastify'
 
 interface Props {
   search:string
@@ -14,25 +15,27 @@ interface Props {
 }
 
 const MainPage:FC<Props> = ({ search, page, setPage }) => {
+  const [filter, setFilter] = useState<FilterScheme>({ type: undefined, genre_in: undefined, seasonYear: undefined })
   const [visible, setVisible] = useState(false)
-  const [animeState, setAnimeState] = useState<any>([])
-  const [genreIn] = useState(undefined)
-  const { data, loading, error } = apiHQ(search, page, genreIn)
-  console.log(data)
+  const [animeState, setAnimeState] = useState<Media[]|[]>([])
+  const { data, loading, error } = apiHQ(search, page, filter)
   const animePage = data && data.Page.pageInfo.currentPage
   const animeList = data && data.Page.media
   const animeGenre = data && data.GenreCollection
-
   useEffect(() => {
-    if (!loading && !error) {
-      setAnimeState((state:any) => {
+    if (error) {
+      toast.warn(error.message)
+    }
+    if (animeList !== undefined) {
+      setAnimeState((state) => {
         if (page === 1) {
           return animeList
         }
-        return [...state, ...animeList]
+        const newState = [...state, ...animeList]
+        return newState
       })
     }
-  }, [page, loading])
+  }, [page, animeList, filter, error])
 
   const onScrollsHandler = (e:any) => {
     if (e.currentTarget.clientHeight +
@@ -84,14 +87,17 @@ const MainPage:FC<Props> = ({ search, page, setPage }) => {
         sx={{ color: '#fff', zIndex: 1 }}
         open={visible}
       >
-      <Filter setVisible={setVisible} animeGenre={animeGenre}/>
+      <Filter setVisible={setVisible} animeGenre={animeGenre} setFilter={setFilter}/>
     </Backdrop>
-
-    <Masonry columns={{ xs: 2, sm: 3, md: 4, lg: 5 }} spacing={1}>
-      {animeState.length > 0 && animeState.map((item:any, index:any) => {
+    <Backdrop open={loading} >
+      <CircularProgress size={80} />
+    </Backdrop>
+    {animeState?.length === 0 && <Box ><Typography align='center' variant='h2'>There are no product, change filter settings</Typography></Box>}
+    {!loading && <Masonry columns={{ xs: 2, sm: 3, md: 4, lg: 5 }} spacing={1}>
+      {animeState !== null && animeState.map((item:any, index:any) => {
         return <AnimeCard key={index} anime={item} />
       })}
-    </Masonry>
+    </Masonry>}
   </Container>
   )
 }

@@ -5,6 +5,7 @@ import LoginIcon from '@mui/icons-material/Login'
 import { useNavigate } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebaseConfig'
+import { toast } from 'react-toastify'
 
 const CustomMenu = () => {
   const user = Boolean(auth.currentUser)
@@ -20,9 +21,10 @@ const CustomMenu = () => {
   const onClickLogout = () => {
     try {
       signOut(auth)
+      toast.success('by by')
       navigate('/')
-    } catch (e) {
-      console.warn('sign-out', e)
+    } catch (e:any) {
+      toast.warn(e.message)
     }
   }
   return (

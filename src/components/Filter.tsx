@@ -1,17 +1,39 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { Button, Grid, Typography } from '@mui/material'
-import { SelectTag } from './FilterInput/SelectTag'
+import { SelectGenre } from './FilterInput/SelectGenre'
 import CheckIcon from '@mui/icons-material/Check'
 import TypeSelect from './FilterInput/TypeSelect'
 import { DataPicker } from './FilterInput/DataPicker'
+import { FilterScheme } from '../api/apiHQ'
 
 interface Props {
   setVisible:React.Dispatch<boolean>
-  animeGenre:[string]
+  animeGenre:[string] | undefined
+  setFilter:React.Dispatch<FilterScheme>
 }
 
-const Filter:FC<Props> = ({ setVisible, animeGenre }) => {
+const Filter:FC<Props> = ({ setVisible, animeGenre, setFilter }) => {
+  const [type, setType] = useState<string>('')
+  const [seasonYear, setSeasonYear] = useState<Date | null>(new Date())
+  const [genre, setGenres] = useState<string[] >([])
+
+  const onClickHandler = () => {
+    setFilter({
+      type: type || undefined,
+      seasonYear: seasonYear && type !== 'MANGA' ? new Date(seasonYear).getFullYear() : undefined,
+      genre_in: genre.length ? genre : undefined
+    })
+    setVisible(false)
+  }
+  const onClickClose = () => {
+    setFilter({
+      type: undefined,
+      seasonYear: undefined,
+      genre_in: undefined
+    })
+    setVisible(false)
+  }
   return (
     <Grid
     position='relative'
@@ -30,19 +52,19 @@ const Filter:FC<Props> = ({ setVisible, animeGenre }) => {
         <Grid sx={{ backgroundColor: '#102122b6', mr: '40px', ml: '40px' }} item xs={12} >
           <Typography sx={{ }} variant='h6' align='center'>FILTER</Typography>
           </Grid>
-        <Grid item > <DataPicker/></Grid>
-        <Grid item > <TypeSelect /></Grid>
-        <Grid item > <SelectTag animeGenre={animeGenre} /></Grid>
+        {type !== 'MANGA' && <Grid item > <DataPicker seasonYear={seasonYear} setSeasonYear={setSeasonYear}/></Grid>}
+        <Grid item > <TypeSelect type={type} setType={setType} /></Grid>
+        <Grid item > <SelectGenre animeGenre={animeGenre} genre={genre} setGenres={setGenres} /></Grid>
         <Button
-        sx={{ position: 'absolute', right: '-15px', top: '-5px' }}
-        onClick={() => setVisible(false)}>
+          sx={{ position: 'absolute', right: '-15px', top: '-5px' }}
+          onClick={onClickClose}>
           <CloseIcon fontSize='large'/>
-          </Button>
-          <Button
-        sx={{ position: 'absolute', right: '-15px', bottom: '-5px' }}
-        onClick={() => setVisible(false)}>
+        </Button>
+        <Button
+            sx={{ position: 'absolute', right: '-15px', bottom: '-5px' }}
+            onClick={onClickHandler}>
           <CheckIcon fontSize='large'/>
-          </Button>
+        </Button>
     </Grid>
   )
 }

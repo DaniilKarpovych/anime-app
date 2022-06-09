@@ -1,11 +1,14 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
-import React, { useState } from 'react'
+import React, { FC } from 'react'
 
-const TypeSelect = () => {
-  const [age, setAge] = useState('')
+interface Props {
+  type:string
+  setType:React.Dispatch<string>
+}
 
+const TypeSelect:FC<Props> = ({ type, setType }) => {
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string)
+    setType(event.target.value as string)
   }
   return (
     <FormControl fullWidth>
@@ -14,7 +17,7 @@ const TypeSelect = () => {
   sx={{ width: '200px' }}
     labelId="demo-simple-select-label"
     id="demo-simple-select"
-    value={age}
+    value={type}
     label="Age"
     onChange={handleChange}
   >

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -8,30 +8,30 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Checkbox from '@mui/material/Checkbox'
 import { Box } from '@mui/material'
 
-const ITEM_HEIGHT = 40
-const ITEM_PADDING_TOP = 4
+const ITEM_HEIGHT = 30
+const ITEM_PADDING_TOP = 0
 const MenuProps = {
   PaperProps: {
     style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      maxHeight: ITEM_HEIGHT * 3.5 + ITEM_PADDING_TOP,
       width: 200
     }
   }
 }
 
 interface Props {
-    animeGenre:[string]
+    animeGenre:[string] | undefined
+    genre:string[]
+    setGenres: React.Dispatch<string[]>
 }
 
-export const SelectTag:FC<Props> = ({ animeGenre }) => {
-  const [selGenres, setSelGenres] = useState<string[]>([])
-  console.log('Value', selGenres)
-  const handleChange = (event: SelectChangeEvent<typeof selGenres>) => {
+export const SelectGenre:FC<Props> = ({ animeGenre, genre, setGenres }) => {
+  const handleChange = (event: SelectChangeEvent<typeof genre>) => {
     const {
       target: { value }
     } = event
 
-    setSelGenres(
+    setGenres(
       typeof value === 'string' ? value.split(',') : value
     )
   }
@@ -44,15 +44,15 @@ export const SelectTag:FC<Props> = ({ animeGenre }) => {
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"
           multiple
-          value={selGenres}
+          value={genre}
           onChange={handleChange}
           input={<OutlinedInput label="Genre" />}
           renderValue={(selected) => selected.join(', ')}
           MenuProps={MenuProps}
         >
-          {animeGenre && animeGenre.map((name) => (
+          {animeGenre && animeGenre.filter((item) => item !== 'Hentai').map((name) => (
             <MenuItem key={name} value={name}>
-              <Checkbox checked={selGenres.indexOf(name) > -1} />
+              <Checkbox checked={genre.indexOf(name) > -1} />
               <ListItemText primary={name} />
             </MenuItem>
           ))}

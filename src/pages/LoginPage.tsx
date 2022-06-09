@@ -10,17 +10,19 @@ import Container from '@mui/material/Container'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { Link, useNavigate } from 'react-router-dom'
 import { auth } from '../firebaseConfig'
+import { toast } from 'react-toastify'
 
 export const LoginPage = () => {
   const navigate = useNavigate()
   const [credential, setCredentials] = useState({ email: '', password: '' })
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     try {
       signInWithEmailAndPassword(auth, credential.email, credential.password)
+      toast.success('You are logged')
       navigate('/')
-    } catch (e) {
-      console.warn('SignIn', e)
+    } catch (e:any) {
+      toast.warn(e.message)
     }
   }
 

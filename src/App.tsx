@@ -13,6 +13,8 @@ import PrivateRoute from './components/PrivateRoute'
 import Profile from './pages/Profile'
 import { Box } from '@mui/material'
 import { auth } from './firebaseConfig'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export const App = () => {
   const [search, setSearch] = useState<string>('')
@@ -21,6 +23,17 @@ export const App = () => {
   <Box >
     <Router>
     <NavBar search={search} setPage={setPage} setSearch={setSearch} />
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+    />
       <Routes>
         {!auth.currentUser && <Route path='/login' element={<LoginPage />} />}
         {!auth.currentUser && <Route path='/sign-up' element={<SignUpPage />} />}

@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { Link, useNavigate } from 'react-router-dom'
 import { auth } from '../firebaseConfig'
+import { toast } from 'react-toastify'
 
 export const SignUpPage = () => {
   const navigate = useNavigate()
@@ -30,10 +31,10 @@ export const SignUpPage = () => {
         displayName: `${firstName + lastName}`
       })
 
-      console.log('Credential', userCredential.user)
+      toast.success('You are signed-up')
       navigate('/')
-    } catch (error) {
-      console.warn(error)
+    } catch (e:any) {
+      toast.warn(e.message)
     }
   }
 

@@ -25,6 +25,9 @@ module.exports = {
     '@typescript-eslint'
   ],
   rules: {
+    'no-console': 1,
+    'comma-spacing': 0,
+    'no-mixed-spaces-and-tabs': 0,
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
     quotes: [2, 'single', 'avoid-escape']

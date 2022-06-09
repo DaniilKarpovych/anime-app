@@ -1,7 +1,8 @@
 import { gql, useQuery } from '@apollo/client'
+import { animeModel } from '../model/animeModel'
 
 const EXCHANGE_RATES = gql`
-query ($id: Int, $page: Int, $search: String, $genre_in: [String]) {
+query ($id: Int, $page: Int, $search: String, $genre_in: [String], $seasonYear:Int, $type:MediaType) {
 Page (page: $page, perPage: 20) {
   pageInfo {
     total
@@ -10,7 +11,7 @@ Page (page: $page, perPage: 20) {
     hasNextPage
     perPage
   }
-  media (id: $id, search: $search, isAdult:false, genre_in:$genre_in, genre_not_in:"Hentai") {
+  media (id: $id, search: $search, isAdult:false, genre_in:$genre_in, genre_not_in:"Hentai", type:$type, seasonYear:$seasonYear) {
     id
     title {
       romaji
@@ -23,17 +24,27 @@ Page (page: $page, perPage: 20) {
   }
 }
 GenreCollection
-# MediaTagCollection
 }
 `
+export interface FilterScheme {
+    type: string|undefined,
+    'genre_in': string[] | string | undefined,
+    seasonYear: number|undefined
 
-export default function apiHQ (filter:string, page:number, genreIn:[string]|undefined) {
-  const { loading, error, data } = useQuery(EXCHANGE_RATES, {
+}
+
+export const apiHQ = (
+  search:string,
+  page:number,
+  filter:FilterScheme
+) => {
+  const { loading, error, data } = useQuery<animeModel>(EXCHANGE_RATES, {
     variables: {
-      search: filter || undefined,
+      search: search || undefined,
       page: page,
-      genre_in: genreIn
+      ...filter
     }
   })
+
   return { loading, error, data }
 }
