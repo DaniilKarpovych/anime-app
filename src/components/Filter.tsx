@@ -11,9 +11,10 @@ interface Props {
   setVisible:React.Dispatch<boolean>
   animeGenre:[string] | undefined
   setFilter:React.Dispatch<FilterScheme>
+  setPage:React.Dispatch<number>
 }
 
-const Filter:FC<Props> = ({ setVisible, animeGenre, setFilter }) => {
+const Filter:FC<Props> = ({ setVisible, animeGenre, setFilter, setPage }) => {
   const [type, setType] = useState<string>('')
   const [seasonYear, setSeasonYear] = useState<Date | null>(new Date())
   const [genre, setGenres] = useState<string[] >([])
@@ -24,6 +25,7 @@ const Filter:FC<Props> = ({ setVisible, animeGenre, setFilter }) => {
       seasonYear: seasonYear && type !== 'MANGA' ? new Date(seasonYear).getFullYear() : undefined,
       genre_in: genre.length ? genre : undefined
     })
+    setPage(1)
     setVisible(false)
   }
   const onClickClose = () => {

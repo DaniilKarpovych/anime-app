@@ -22,6 +22,7 @@ const MainPage:FC<Props> = ({ search, page, setPage }) => {
   const animePage = data && data.Page.pageInfo.currentPage
   const animeList = data && data.Page.media
   const animeGenre = data && data.GenreCollection
+  const nextPage = data && data.Page.pageInfo.hasNextPage
   useEffect(() => {
     if (error) {
       toast.warn(error.message)
@@ -41,7 +42,7 @@ const MainPage:FC<Props> = ({ search, page, setPage }) => {
     if (e.currentTarget.clientHeight +
       e.currentTarget.scrollTop >=
       e.currentTarget.scrollHeight - 80 &&
-      (animePage ?? animePage)) {
+      animePage && nextPage) {
       setPage(animePage + 1)
     }
   }
@@ -87,17 +88,17 @@ const MainPage:FC<Props> = ({ search, page, setPage }) => {
         sx={{ color: '#fff', zIndex: 1 }}
         open={visible}
       >
-      <Filter setVisible={setVisible} animeGenre={animeGenre} setFilter={setFilter}/>
+      <Filter setPage={setPage} setVisible={setVisible} animeGenre={animeGenre} setFilter={setFilter}/>
     </Backdrop>
-    <Backdrop open={loading} >
-      <CircularProgress size={80} />
-    </Backdrop>
-    {animeState?.length === 0 && <Box ><Typography align='center' variant='h2'>There are no product, change filter settings</Typography></Box>}
-    {!loading && <Masonry columns={{ xs: 2, sm: 3, md: 4, lg: 5 }} spacing={1}>
+    {animeState?.length === 0 && !loading && <Box ><Typography align='center' variant='h2'>There are no anime and manga, change filter settings</Typography></Box>}
+     <Masonry columns={{ xs: 2, sm: 3, md: 4, lg: 5 }} spacing={1}>
       {animeState !== null && animeState.map((item:any, index:any) => {
         return <AnimeCard key={index} anime={item} />
       })}
-    </Masonry>}
+    </Masonry>
+    <Backdrop open={loading} >
+      <CircularProgress size={80} />
+    </Backdrop>
   </Container>
   )
 }
